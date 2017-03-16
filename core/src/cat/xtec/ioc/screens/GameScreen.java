@@ -45,6 +45,10 @@ public class GameScreen implements Screen {
     // Preparem el textLayout per escriure text
     private GlyphLayout textLayout;
     private GlyphLayout textPuntuacio;
+    private GlyphLayout textFacil;
+    private GlyphLayout textNormal;
+    private GlyphLayout textDificil;
+
     private String puntuacioFinal;
 
     public GameScreen(Batch prevBatch, Viewport prevViewport) {
@@ -72,10 +76,15 @@ public class GameScreen implements Screen {
 
         // Iniciem el GlyphLayout
         textLayout = new GlyphLayout();
-        textLayout.setText(AssetManager.font, "Are you\nready?");
+        textLayout.setText(AssetManager.font, "Elige una dificultad");
         textPuntuacio = new GlyphLayout();
         textPuntuacio.setText(AssetManager.fontPuntuacio, "Score: "+puntuacio);
-
+        textFacil = new GlyphLayout();
+        textFacil.setText(AssetManager.font, "FACIL");
+        textNormal = new GlyphLayout();
+        textNormal.setText(AssetManager.font, "NORMAL");
+        textDificil = new GlyphLayout();
+        textDificil.setText(AssetManager.font, "DIFICIL");
 
         currentState = GameState.READY;
 
@@ -163,7 +172,10 @@ public class GameScreen implements Screen {
 
         // Dibuixem el text al centre de la pantalla
         batch.begin();
-        AssetManager.font.draw(batch, textLayout, (Settings.GAME_WIDTH / 2) - textLayout.width / 2, (Settings.GAME_HEIGHT / 2) - textLayout.height / 2);
+        AssetManager.font.draw(batch, textLayout, (Settings.GAME_WIDTH / 2) - textLayout.width / 2, (Settings.GAME_HEIGHT / 5) - textLayout.height / 2);
+        AssetManager.fontMenu.draw(batch, textFacil, Settings.GAME_WIDTH/2, (Settings.GAME_HEIGHT/2)-20);
+        AssetManager.fontMenu.draw(batch, textNormal, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2);
+        AssetManager.fontMenu.draw(batch, textDificil, Settings.GAME_WIDTH/2, (Settings.GAME_HEIGHT/2)+20);
         //stage.addActor(textLbl);
         puntuacio=0;
         batch.end();
@@ -179,8 +191,7 @@ public class GameScreen implements Screen {
             // Si hi ha hagut col·lisió: Reproduïm l'explosió i posem l'estat a GameOver
             AssetManager.explosionSound.play();
             stage.getRoot().findActor("spacecraft").remove();
-            puntuacioFinal= String.valueOf(puntuacio);
-            textLayout.setText(AssetManager.font, "Game Over\n "+"Score:"+puntuacio++);
+            textLayout.setText(AssetManager.font, "Game Over\n "+"Score:"+puntuacio);
             currentState = GameState.GAMEOVER;
         }
         batch.end();

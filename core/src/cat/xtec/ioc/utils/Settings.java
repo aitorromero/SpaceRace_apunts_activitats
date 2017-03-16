@@ -13,6 +13,8 @@ public class Settings {
     public static final int SPACECRAFT_HEIGHT = 15;
     public static final float SPACECRAFT_STARTX = 20;
     public static final float SPACECRAFT_STARTY = GAME_HEIGHT/2 - SPACECRAFT_HEIGHT/2;
+    public static final float SPACECRAFT_MENU_STARTX = GAME_WIDTH/2-SPACECRAFT_VELOCITY_X;
+    public static final float SPACECRAFT_MENU_STARTY = GAME_HEIGHT/2 - SPACECRAFT_HEIGHT/2;
 
     // Rang de valors per canviar la mida de l'asteroide.
     public static final float MAX_ASTEROID = 1.5f;

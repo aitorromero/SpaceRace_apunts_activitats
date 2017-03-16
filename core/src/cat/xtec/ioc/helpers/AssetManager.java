@@ -32,6 +32,7 @@ public class AssetManager {
     // Font
     public static BitmapFont font;
     public static BitmapFont fontPuntuacio;
+    public static BitmapFont fontMenu;
 
     public static void load() {
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
@@ -96,6 +97,8 @@ public class AssetManager {
         font.getData().setScale(0.4f);
         fontPuntuacio = new BitmapFont(fontFile, true);
         fontPuntuacio.getData().setScale(0.15f);
+        fontMenu = new BitmapFont(fontFile, true);
+        fontMenu.getData().setScale(0.25f);
     }
 
     public static void dispose() {
