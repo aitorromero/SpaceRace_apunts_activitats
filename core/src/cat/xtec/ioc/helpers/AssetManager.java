@@ -31,7 +31,7 @@ public class AssetManager {
 
     // Font
     public static BitmapFont font;
-
+    public static BitmapFont fontPuntuacio;
 
     public static void load() {
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
@@ -94,6 +94,8 @@ public class AssetManager {
         FileHandle fontFile = Gdx.files.internal("fonts/space.fnt");
         font = new BitmapFont(fontFile, true);
         font.getData().setScale(0.4f);
+        fontPuntuacio = new BitmapFont(fontFile, true);
+        fontPuntuacio.getData().setScale(0.15f);
     }
 
     public static void dispose() {

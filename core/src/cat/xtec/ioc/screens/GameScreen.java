@@ -33,6 +33,7 @@ public class GameScreen implements Screen {
     private Stage stage;
     private Spacecraft spacecraft;
     private ScrollHandler scrollHandler;
+    private int puntuacio=0;
 
     // Encarregats de dibuixar elements per pantalla
     private ShapeRenderer shapeRenderer;
@@ -43,6 +44,8 @@ public class GameScreen implements Screen {
 
     // Preparem el textLayout per escriure text
     private GlyphLayout textLayout;
+    private GlyphLayout textPuntuacio;
+    private String puntuacioFinal;
 
     public GameScreen(Batch prevBatch, Viewport prevViewport) {
 
@@ -70,6 +73,9 @@ public class GameScreen implements Screen {
         // Iniciem el GlyphLayout
         textLayout = new GlyphLayout();
         textLayout.setText(AssetManager.font, "Are you\nready?");
+        textPuntuacio = new GlyphLayout();
+        textPuntuacio.setText(AssetManager.fontPuntuacio, "Score: "+puntuacio);
+
 
         currentState = GameState.READY;
 
@@ -159,20 +165,25 @@ public class GameScreen implements Screen {
         batch.begin();
         AssetManager.font.draw(batch, textLayout, (Settings.GAME_WIDTH / 2) - textLayout.width / 2, (Settings.GAME_HEIGHT / 2) - textLayout.height / 2);
         //stage.addActor(textLbl);
+        puntuacio=0;
         batch.end();
 
     }
 
     private void updateRunning(float delta) {
         stage.act(delta);
-
+        batch.begin();
+        textPuntuacio.setText(AssetManager.fontPuntuacio, "Score: "+puntuacio++);
+        AssetManager.fontPuntuacio.draw(batch, textPuntuacio, Settings.GAME_WIDTH-40, 3);
         if (scrollHandler.collides(spacecraft)) {
             // Si hi ha hagut col·lisió: Reproduïm l'explosió i posem l'estat a GameOver
             AssetManager.explosionSound.play();
             stage.getRoot().findActor("spacecraft").remove();
-            textLayout.setText(AssetManager.font, "Game Over :'(");
+            puntuacioFinal= String.valueOf(puntuacio);
+            textLayout.setText(AssetManager.font, "Game Over\n "+"Score:"+puntuacio++);
             currentState = GameState.GAMEOVER;
         }
+        batch.end();
     }
 
     private void updateGameOver(float delta) {
@@ -180,10 +191,10 @@ public class GameScreen implements Screen {
 
         batch.begin();
         AssetManager.font.draw(batch, textLayout, (Settings.GAME_WIDTH - textLayout.width) / 2, (Settings.GAME_HEIGHT - textLayout.height) / 2);
+        //AssetManager.fontPuntuacio.draw(batch, textPuntuacio, Settings.GAME_WIDTH-50, 0);
         // Si hi ha hagut col·lisió: Reproduïm l'explosió i posem l'estat a GameOver
         batch.draw(AssetManager.explosionAnim.getKeyFrame(explosionTime, false), (spacecraft.getX() + spacecraft.getWidth() / 2) - 32, spacecraft.getY() + spacecraft.getHeight() / 2 - 32, 64, 64);
         batch.end();
-
         explosionTime += delta;
 
     }
@@ -204,6 +215,7 @@ public class GameScreen implements Screen {
 
         // Posem a 0 les variables per controlar el temps jugat i l'animació de l'explosió
         explosionTime = 0.0f;
+
 
     }
 

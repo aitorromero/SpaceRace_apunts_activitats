@@ -51,7 +51,7 @@ public class SplashScreen implements Screen {
         Container container = new Container(textLbl);
         container.setTransform(true);
         container.center();
-        container.setPosition(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 2);
+        container.setPosition(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 4);
 
         // Afegim les accions de escalar: primer es fa gran i després torna a l'estat original ininterrompudament
         container.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.scaleTo(1.5f, 1.5f, 1), Actions.scaleTo(1, 1, 1))));
@@ -59,7 +59,7 @@ public class SplashScreen implements Screen {
 
         // Creem la imatge de la nau i li assignem el moviment en horitzontal
         Image spacecraft = new Image(AssetManager.spacecraft);
-        float y = Settings.GAME_HEIGHT / 2 + textLbl.getHeight();
+        float y = Settings.GAME_HEIGHT / 3 + textLbl.getHeight();
         spacecraft.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(0 - spacecraft.getWidth(), y), Actions.moveTo(Settings.GAME_WIDTH, y, 5))));
 
         stage.addActor(spacecraft);
@@ -83,7 +83,7 @@ public class SplashScreen implements Screen {
             game.setScreen(new GameScreen(stage.getBatch(), stage.getViewport()));
             dispose();
         }
-
+        //gdxinput.x
     }
 
     @Override
