@@ -14,6 +14,7 @@ public class ScrollHandler extends Group {
     Background bg, bg_back;
 
     // Asteroides
+    public int puntuacio;
     int numAsteroids;
     private ArrayList<Asteroid> asteroids;
 
@@ -30,6 +31,36 @@ public class ScrollHandler extends Group {
         addActor(bg);
         addActor(bg_back);
 
+        crearAsteroides();
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        // Si algun element està fora de la pantalla, fem un reset de l'element.
+        if (bg.isLeftOfScreen()) {
+            bg.reset(bg_back.getTailX());
+
+        } else if (bg_back.isLeftOfScreen()) {
+            bg_back.reset(bg.getTailX());
+
+        }
+
+        for (int i = 0; i < asteroids.size(); i++) {
+
+            Asteroid asteroid = asteroids.get(i);
+            if (asteroid.isLeftOfScreen()) {
+                if (i == 0) {
+                    asteroid.reset(asteroids.get(asteroids.size() - 1).getTailX() + Settings.ASTEROID_GAP);
+                } else {
+                    asteroid.reset(asteroids.get(i - 1).getTailX() + Settings.ASTEROID_GAP);
+                }
+                puntuacio+=10;
+            }
+        }
+    }
+
+    public void crearAsteroides(){
         // Creem l'objecte random
         r = new Random();
 
@@ -57,32 +88,6 @@ public class ScrollHandler extends Group {
             asteroids.add(asteroid);
             // Afegim l'asteroide al grup d'actors
             addActor(asteroid);
-        }
-
-    }
-
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-        // Si algun element està fora de la pantalla, fem un reset de l'element.
-        if (bg.isLeftOfScreen()) {
-            bg.reset(bg_back.getTailX());
-
-        } else if (bg_back.isLeftOfScreen()) {
-            bg_back.reset(bg.getTailX());
-
-        }
-
-        for (int i = 0; i < asteroids.size(); i++) {
-
-            Asteroid asteroid = asteroids.get(i);
-            if (asteroid.isLeftOfScreen()) {
-                if (i == 0) {
-                    asteroid.reset(asteroids.get(asteroids.size() - 1).getTailX() + Settings.ASTEROID_GAP);
-                } else {
-                    asteroid.reset(asteroids.get(i - 1).getTailX() + Settings.ASTEROID_GAP);
-                }
-            }
         }
     }
 

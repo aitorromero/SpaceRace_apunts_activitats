@@ -79,7 +79,21 @@ public class InputHandler implements InputProcessor {
 
             case READY:
                 // Si fem clic comencem el joc
+                //System.out.println(screenX+ "-" +screenY);
+                boolean posicionH = 234<screenX && screenX<375;
+
+                if(posicionH && 88<screenY && screenY<116){
+                    //FACIL
+                    System.out.println("FACIL");
+                }else if(posicionH && 116<screenY && screenY<154){
+                    //NORMAL
+                    System.out.println("NORMAL");
+                }else if(posicionH && 154<screenY && screenY<194){
+                    //DIFICIL
+                    System.out.println("DIFICIL");
+                }
                 screen.setCurrentState(GameScreen.GameState.RUNNING);
+
                 break;
             case RUNNING:
                 previousY = screenY;

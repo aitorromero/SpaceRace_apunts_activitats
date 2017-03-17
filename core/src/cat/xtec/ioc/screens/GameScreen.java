@@ -177,7 +177,7 @@ public class GameScreen implements Screen {
         AssetManager.fontMenu.draw(batch, textNormal, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2);
         AssetManager.fontMenu.draw(batch, textDificil, Settings.GAME_WIDTH/2, (Settings.GAME_HEIGHT/2)+20);
         //stage.addActor(textLbl);
-        puntuacio=0;
+        scrollHandler.puntuacio=0;
         batch.end();
 
     }
@@ -185,13 +185,13 @@ public class GameScreen implements Screen {
     private void updateRunning(float delta) {
         stage.act(delta);
         batch.begin();
-        textPuntuacio.setText(AssetManager.fontPuntuacio, "Score: "+puntuacio++);
+        textPuntuacio.setText(AssetManager.fontPuntuacio, "Score: "+scrollHandler.puntuacio);
         AssetManager.fontPuntuacio.draw(batch, textPuntuacio, Settings.GAME_WIDTH-40, 3);
         if (scrollHandler.collides(spacecraft)) {
             // Si hi ha hagut col·lisió: Reproduïm l'explosió i posem l'estat a GameOver
             AssetManager.explosionSound.play();
             stage.getRoot().findActor("spacecraft").remove();
-            textLayout.setText(AssetManager.font, "Game Over\n "+"Score:"+puntuacio);
+            textLayout.setText(AssetManager.font, "Game Over\n "+"Score:"+scrollHandler.puntuacio);
             currentState = GameState.GAMEOVER;
         }
         batch.end();
@@ -213,7 +213,7 @@ public class GameScreen implements Screen {
     public void reset() {
 
         // Posem el text d'inici
-        textLayout.setText(AssetManager.font, "Are you\nready?");
+        textLayout.setText(AssetManager.font, "Are you ready?");
         // Cridem als restart dels elements.
         spacecraft.reset();
         scrollHandler.reset();
