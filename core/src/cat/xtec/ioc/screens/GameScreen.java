@@ -51,10 +51,22 @@ public class GameScreen implements Screen {
 
     private String puntuacioFinal;
 
-    public GameScreen(Batch prevBatch, Viewport prevViewport) {
+    public GameScreen(Batch prevBatch, Viewport prevViewport, String dificultad) {
 
         // Iniciem la música
         AssetManager.music.play();
+
+        if(dificultad.equals("facil")) {
+            Settings.ASTEROID_GAP += 10;
+            Settings.SPACECRAFT_VELOCITY += 30;
+        } else if (dificultad.equals("medio")){
+            Settings.ASTEROID_SPEED -= 50;
+            Settings.SPACECRAFT_VELOCITY += 10;
+            Settings.ASTEROID_GAP -= 20;
+        } else if (dificultad.equals("dificil")){
+            Settings.ASTEROID_GAP -= 50;
+            Settings.ASTEROID_SPEED -= 40;
+        }
 
         // Creem el ShapeRenderer
         shapeRenderer = new ShapeRenderer();
@@ -73,19 +85,21 @@ public class GameScreen implements Screen {
         stage.addActor(spacecraft);
         // Donem nom a l'Actor
         spacecraft.setName("spacecraft");
-
+/*
         // Iniciem el GlyphLayout
         textLayout = new GlyphLayout();
         textLayout.setText(AssetManager.font, "Elige una dificultad");
+        */
         textPuntuacio = new GlyphLayout();
         textPuntuacio.setText(AssetManager.fontPuntuacio, "Score: "+puntuacio);
+        /*
         textFacil = new GlyphLayout();
         textFacil.setText(AssetManager.font, "FACIL");
         textNormal = new GlyphLayout();
         textNormal.setText(AssetManager.font, "NORMAL");
         textDificil = new GlyphLayout();
         textDificil.setText(AssetManager.font, "DIFICIL");
-
+*/
         currentState = GameState.READY;
 
         // Assignem com a gestor d'entrada la classe InputHandler
@@ -172,10 +186,13 @@ public class GameScreen implements Screen {
 
         // Dibuixem el text al centre de la pantalla
         batch.begin();
+        /*
         AssetManager.font.draw(batch, textLayout, (Settings.GAME_WIDTH / 2) - textLayout.width / 2, (Settings.GAME_HEIGHT / 5) - textLayout.height / 2);
+
         AssetManager.fontMenu.draw(batch, textFacil, Settings.GAME_WIDTH/2, (Settings.GAME_HEIGHT/2)-20);
         AssetManager.fontMenu.draw(batch, textNormal, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2);
         AssetManager.fontMenu.draw(batch, textDificil, Settings.GAME_WIDTH/2, (Settings.GAME_HEIGHT/2)+20);
+        */
         //stage.addActor(textLbl);
         scrollHandler.puntuacio=0;
         batch.end();
